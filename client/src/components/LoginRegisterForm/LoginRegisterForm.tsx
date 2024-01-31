@@ -12,6 +12,11 @@ const LoginRegisterForm = () => {
     const [user, setUser] = useState<User>({email: '', password: ''})
     const dispatch = useDispatch<AppDispatch>()
 
+    //мне впадлу было валидировать поля
+    const isEmailAndPasswordNotEmpty = () => {
+        return user.email !== '' && user.password !== ''
+    }
+
     const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e: ChangeEvent<HTMLInputElement>) => {
         setUser({
             ...user,
@@ -20,10 +25,14 @@ const LoginRegisterForm = () => {
     };
 
     const handleLogin = () => {
-        dispatch(loginUser(user))
+        if(isEmailAndPasswordNotEmpty()){
+            dispatch(loginUser(user))
+        }
     }
     const handleRegister = () => {
-        dispatch(registerUser(user))
+        if(isEmailAndPasswordNotEmpty()) {
+            dispatch(registerUser(user))
+        }
     }
 
     return (
